@@ -5,7 +5,7 @@
 
 int main() {
         srand(time(NULL));
-        int N = 10, aux1 = 0, aux2 = 0, qtnPalavras = 9, posLinha = 0, posColuna = 0, direcao = 0, tem_palavra = 0;
+        int N = 10, aux1 = 0, aux2 = 0, qtnPalavras = 0, posLinha = 0, posColuna = 0, direcao = 0, tem_palavra = 0;
         // Matriz das palavras que vai colocar no caca palavras, o caca palavras em si, uma string auxiliar para ser intermediária da palavra e um ponto para servir como br
         char palavras[110][110] = {}, caca_palavras[110][110] = {}, aux_palavra[110] = {};
         // Matriz com a decomposição das direções/sentidos da rosa dos ventos(primeiro linha, depois coluna)
@@ -47,9 +47,13 @@ int main() {
                         // Por alguma lógica que me foge tova vez que eu tento alguma lógica de um if para tentar limitar isso ele da sempre as colunas com zero
 
                 } while (
-                        (posLinha + (strlen(palavras[i]) * dir[direcao][0]) > N || posColuna + (strlen(palavras[i]) * dir[direcao][1] > N)) &&
+                        ((posLinha + (strlen(palavras[i]) * dir[direcao][0]) > N || posColuna + (strlen(palavras[i]) * dir[direcao][1] > N)) 
+                        ||
+                        ((posLinha + (strlen(palavras[i]) * dir[direcao][0]) < 0 || posColuna + (strlen(palavras[i]) * dir[direcao][1] < 0))))
+                        &&
                         tem_palavra == 1
                 );
+                printf("%d %d %d\n", posLinha, posColuna, direcao);
 
                 // Colocar na matriz de caça palavras, na linha e na coluna correspondente, letra por letra
                 for (int z = 0; z < strlen(palavras[i]) && tem_palavra == 0; z++) {
@@ -63,7 +67,7 @@ int main() {
         for (int i = 0; i < N; i++) {
                 for (int z = 0; z < N; z++) {
                         if (caca_palavras[i][z] == '\0') {
-                                caca_palavras[i][z] =  rand() % 26 + 65;
+                                caca_palavras[i][z] = '0'; //rand() % 26 + 65;
                         }
                 }
         }
